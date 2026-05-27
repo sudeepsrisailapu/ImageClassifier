@@ -36,52 +36,8 @@ p4-2026-ImageClassifier/
 
 ---
 
-## Setup
-
-### 1. Clone and install dependencies
-
-```bash
-git clone https://github.com/<your-username>/p4-2026-ImageClassifier.git
-cd p4-2026-ImageClassifier
-pip install -r requirements.txt
-```
-
-### 2. Download the dataset
-
-You need a [Kaggle account](https://www.kaggle.com) and API token (`~/.kaggle/kaggle.json`).
-
-```bash
-pip install kaggle
-kaggle datasets download paultimothymooney/chest-xray-pneumonia -p data/ --unzip
-```
-
-This creates:
-```
-data/chest_xray/
-    train/
-        NORMAL/
-        PNEUMONIA/
-    val/
-        NORMAL/
-        PNEUMONIA/
-    test/
-        NORMAL/
-        PNEUMONIA/
-```
-
----
-
-## Usage
-
-### Train
-
-```bash
-python src/train.py
-```
 
 Trains for up to 20 epochs with early stopping. Best checkpoint saved to `outputs/best_model.pth`.
-
-### Evaluate
 
 ```bash
 python src/evaluate.py
