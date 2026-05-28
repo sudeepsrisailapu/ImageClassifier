@@ -1,6 +1,6 @@
 # Chest X-Ray Image Classifier with Interpretability
 
-A convolutional neural network (ResNet-18) trained on the [Kaggle Chest X-Ray (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia) dataset, with **Grad-CAM** visualizations that highlight the lung regions driving each prediction.
+A neural network (ResNet-18) that is trained on the [Kaggle Chest X-Ray (Pneumonia)](https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia) dataset, with **Grad-CAM** visualizations that highlight the lung regions driving each prediction.
 
 ---
 
@@ -49,11 +49,12 @@ Prints classification report and saves:
 
 ### Predict on a single image
 
+Example prediction:
 ```bash
 python predict.py --image data/chest_xray/test/PNEUMONIA/person1_bacteria_1.jpeg
 ```
 
-Output:
+Example Output:
 ```
 Prediction : PNEUMONIA
 Confidence : 94.3%
@@ -64,11 +65,7 @@ Grad-CAM   : outputs/gradcam_person1_bacteria_1.png
 
 ## Interpretability: Grad-CAM
 
-Grad-CAM (Gradient-weighted Class Activation Mapping) uses the gradients of the predicted class score flowing back into the final convolutional layer (`layer4`) to produce a coarse localization map. Brighter regions in the heatmap indicate areas the model relied on most for its prediction.
-
-**Example output:**
-
-> *(After running predict.py, Grad-CAM PNGs are saved to `outputs/` — bright activations typically cluster over infected lung regions in pneumonia cases.)*
+Grad-CAM (Gradient-weighted Class Activation Mapping) uses the gradients of the predicted class score flowing back into the final convolutional layer (`layer4`) to produce a coarse localization map. Brighter regions in the heatmap indicate areas the model relied on most for its prediction.****
 
 ---
 
@@ -76,11 +73,26 @@ Grad-CAM (Gradient-weighted Class Activation Mapping) uses the gradients of the 
 
 | Metric | Value |
 |--------|-------|
-| Test Accuracy | TBD after training |
-| AUC-ROC | TBD after training |
-| F1 (Pneumonia) | TBD after training |
+| Test Accuracy | .83 or 83% |
+| AUC-ROC | 0.9552870918255533 |
+| F1 (Pneumonia) | .88 |
 
-*(Update this table after running `src/evaluate.py`)*
+The model was able to correctly identify 389 of the 390 test images provided in the pneumonia dataset, yielding a 1.00 recall rate, indicating the model's sensitivity to pneumonia cases. On the other hand, the model yields a recall rate of .56 for NORMAL, reflecting a conservative bias that causes cases that might not be pneumonia to still be flagged as the illness. However, this seems appropriate in a medical situation where they would rather have a false alarm rather than letting the illness be waived off without 100% confidence. This tradeoff in the results could also be due to the large amount of pneumonia case images in comparison to patients without the illness.
+
+## Confusion Matrix
+<img width="640" height="480" alt="confusion_matrix" src="https://github.com/user-attachments/assets/9a581ed7-b4f5-45a1-bf1d-4a797609ee23" />
+
+## Prediction Results
+
+Pneumonia: gradcam_person100_bacteria_475.png
+
+<img width="224" height="224" alt="gradcam_person100_bacteria_475" src="https://github.com/user-attachments/assets/e7f57245-4635-4afe-ae51-c5545ef46750" />
+
+Normal: gradcam_IM-0029-0001.png
+
+<img width="224" height="224" alt="gradcam_IM-0029-0001" src="https://github.com/user-attachments/assets/7fd0c460-f5fa-42eb-b7ae-f012292cf6fc" />
+
+The heatmaps above show which regions of the X-ray were used by the model when trying to predict whether the patient in the image had pneumonia or not. The brighter regions indicate which areas of the image had a stronger influence on the prediction.
 
 ---
 
@@ -101,7 +113,3 @@ Grad-CAM (Gradient-weighted Class Activation Mapping) uses the gradients of the 
 - [matplotlib](https://matplotlib.org/) / [seaborn](https://seaborn.pydata.org/) — plots
 
 ---
-
-## License
-
-MIT
