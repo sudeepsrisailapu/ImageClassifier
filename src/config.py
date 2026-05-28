@@ -1,11 +1,12 @@
 import os
 import torch
 
-DATA_DIR = "data/chest_xray"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data", "chest_xray", "chest_xray")
+OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 TRAIN_DIR = os.path.join(DATA_DIR, "train")
 VAL_DIR = os.path.join(DATA_DIR, "val")
 TEST_DIR = os.path.join(DATA_DIR, "test")
-OUTPUT_DIR = "outputs"
 MODEL_PATH = os.path.join(OUTPUT_DIR, "best_model.pth")
 
 EPOCHS = 20

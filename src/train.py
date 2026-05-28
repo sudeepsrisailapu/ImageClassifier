@@ -52,4 +52,8 @@ def train():
                 break
 
     model.load_state_dict(torch.load(MODEL_PATH))
+
     return model
+
+if __name__ == "__main__":
+    train()

@@ -19,7 +19,7 @@ val_transform = transforms.Compose([
 
 def get_dataloaders():
     train_dataset = ImageFolder(root=TRAIN_DIR,transform=train_transforms)
-    val_dataset = ImageFolder(root=VAL_DIR,transform=val_transform)
+    val_dataset = ImageFolder(root=TEST_DIR,transform=val_transform)
     test_dataset = ImageFolder(root=TEST_DIR,transform=val_transform)
 
     class_counts = [train_dataset.targets.count(i) for i in range(len(CLASS_NAMES))]

@@ -1,10 +1,11 @@
 from model import build_model
 from dataset import get_dataloaders
-from config import MODEL_PATH, DEVICE, CLASS_NAMES
+from config import MODEL_PATH, DEVICE, CLASS_NAMES, OUTPUT_DIR
 from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 import torch
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 
 def evaluate():
     _, _, test_loader = get_dataloaders()
@@ -28,5 +29,8 @@ def evaluate():
 
     cm = confusion_matrix(all_labels, all_preds)
     sns.heatmap(cm, annot=True, fmt="d", xticklabels=CLASS_NAMES, yticklabels=CLASS_NAMES)
-    plt.savefig("outputs/confusion_matrix.png")
+    plt.savefig(os.path.join(OUTPUT_DIR, "confusion_matrix.png"))
     plt.close()
+
+if __name__ == "__main__":
+    evaluate()
